@@ -1,57 +1,19 @@
 <!DOCTYPE html>
 <html>
-<svg _viewBox="0 0 800 600">
 
-  <filter id="drop-shadow">
-    <feGaussianBlur stdDeviation="10" in="SourceAlpha" />
-    <feOffset dx="0" dy="0" result="offsetblur" />
-    <feFlood flood-color="rgba(0,0,0,1)" />
-    <feComposite operator="in" in2="offsetblur" />
-    <feMerge>
-    <feMergeNode/>
-    <feMergeNode in="SourceGraphic" />
-    </feMerge>
-  </filter>
+<title>Where's Waldo</title>
 
-  <radialGradient id="rad-grad" r="40%">
-    <stop stop-color="#FFF" offset="75%"></stop>
-    <stop stop-color="rgba(255,255,255,0)" offset="100%"></stop>
-  </radialGradient>
+<link rel="stylesheet" href="style.css">
 
-  <radialGradient id="rad-grad-invert" r="100%" cx="50%" cy="0%" gradientUnits="userSpaceOnUse">
-    <stop stop-color="rgba(255,255,255,0)" offset="20%"></stop>
-    <stop stop-color="rgba(255,255,255,.5)" offset="80%"></stop>
-  </radialGradient>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
-  <linearGradient id="linear-grad">
-    <stop stop-color="rgba(0,0,0,1)" offset="0%"></stop>
-    <stop stop-color="rgba(0,0,0,.5)" offset="10%"></stop>
-    <stop stop-color="rgba(0,0,0,.5)" offset="90%"></stop>
-    <stop stop-color="rgba(0,0,0,1)" offset="100%"></stop>
-  </linearGradient>
+<div></div>
 
+<audio autoplay>
+    <source src="bg.mp3" type="audio/mpeg" display="none" >
+</audio>
 
-  <mask id="mask">
-    <rect width="100%" height="100%" fill="#333"></rect>
-
-    <circle r="100" cx="50%" cy="50%" fill="url(#rad-grad)" id="hole"> </circle>
-
-    <path d="M400,600 800,300, 0,300 Z" fill="url(#rad-grad-invert)" _stroke="#FFF" _stroke-width="5" id="path"></path>
-  </mask>
-
-  <g mask="url(#mask)">
-    <rect width="100%" height="100%" fill="#111" id="rect"></rect>
-
-    <image xlink:href="https://upload.wikimedia.org/wikipedia/commons/8/84/Split_Sky.jpg" width="100%" height="100%" preserveAspectRatio="xMidYMid slice"></image>
-
-    <rect width="100%" height="100%" fill="url(#linear-grad)" stroke="#000" stroke-width="3"></rect>
-
-    <image xlink:href="https://whereswaldoemotionally.files.wordpress.com/2013/09/waldo9.jpg" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" filter="url(#drop-shadow)"></image>
-  </g>
-
-
-
-  <rect width="100%" height="100%" fill="transparent" _stroke="yellowgreen" _stroke-width="5" id="rect-top"></rect>
-</svg>
+<script src="tmp.js"></script>
 
 </html>
+
