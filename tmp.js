@@ -13,3 +13,7 @@ $(document).mousemove(function(e){
     'clip-path' : path
   });
 });
+
+var center;
+
+
