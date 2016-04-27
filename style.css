@@ -2,7 +2,7 @@ html,div {
   width: 100%;
   height: 100%;
   margin: 0;
-  background-image: url(http://jokideo.com/wp-content/uploads/2013/05/Lets-play-a-game-Wheres-wally-waldo.jpg);
+  background-image: url('http://jokideo.com/wp-content/uploads/2013/05/Lets-play-a-game-Wheres-wally-waldo.jpg');
   background-position: center center;
   overflow: hidden;
 }
@@ -14,9 +14,9 @@ body {
   overflow: hidden;
   background-color: #111;
   background-blend-mode: multiply;
-  cursor: none;
+  cursor: crosshair;
 }
 
 div{
-  -webkit-clip-path: circle(20% at center center);
+  -webkit-clip-path: circle(10% at center center);
 }
