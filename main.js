@@ -28,9 +28,6 @@ $(document).dblclick(function(e){
       oriImageWidths = [2048, 2828, 2048, 2953],  // for four images
       oriImageHeights = [1454, 1828, 1282, 2088], // for four images
 
-      // oriWaldoWidths = [[1725, 1750, 1725, 1750],[1125, 1155, 1130, ],[], []],  //
-      // oriWaldoHeights = [[410, 450, 410, 450], [1035, 1140, 1190, ],[], []];     // first Waldo image: leftTop, rightTop, leftBot, rightBot
-
       oriWaldoCoors = [
                        [1725,410],[1750,450],
                        [1125,1035],[1136,1216],
@@ -39,15 +36,25 @@ $(document).dblclick(function(e){
       ];
 
       // calculate the ratios for four images
-      for(var i = 0;i < 4; i++) {
-        var heightRatios = [], widthRatios = [];
-        heightRatios.push(oriWaldoCoors[i][0] / oriImageHeights[i]);
-        widthRatios.push(oriWaldoCoors[i][1] / oriImageWidths[i]);
+      for(var i = 0;i <oriImageWidths.length; i++) {
+          for(var j = 0; j < oriWaldoCoors.length; j++) {
+              var widthRatios = [], heightRatios = [];
+              widthRatios.push(oriWaldoCoors[j][0] / oriImageWidths[i]);
+              heightRatios.push(oriWaldoCoors[j][1] / oriImageHeights[i]);
+          }
       }
 
+      // calculate the new coordinates for waldo for each image: take out those values in pairs
+      for(var i = 0; i < oriWaldoCoors.length; i++) {
+          var newLeft = widthRatios[i] * windowWidth;
+          var newRight = heightRatios[i] * windowHeight;
+          var newTop = widthRatios[i] * windowWidth;
+          var newBot = heightRatios[i] * windowHeight;
+      }
+
+
       // detect if the mouse is within the Waldo_range: if found, change the background color and next level
-      var j = level * 2;
-      if(mouseX >= oriWaldoCoors[j][0] && mouseX <= oriWaldoCoors[j+1][0] && mouseY >= oriWaldoCoors[j][1] && mouseY <= oriWaldoCoors[j+1][1]) {
+      if(mouseX >= newLeft && mouseX <= newRight && mouseY >= newBot && mouseY <= newTop) {
         $('body').css("background", "#FFEC8B");
         level += 1;
         level = level % backgrounds.length;
@@ -61,6 +68,4 @@ $(document).dblclick(function(e){
         alert("Really?! That's your Waldo!")
         $('body').css("background", "#000");
       }
-
 });// double click funtion to find waldo
-
