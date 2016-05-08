@@ -41,7 +41,7 @@ function scale()
 
 	window.rgradient.width = window.level.aura * 2 + 2;
 	window.rgradient.height = window.rgradient.width;
-	let c = window.rgradient.getContext("2d");
+	var c = window.rgradient.getContext("2d");
 	c.fillStyle = c.createRadialGradient(window.level.aura,window.level.aura,window.level.aura,window.level.aura,window.level.aura,window.level.aura / 2);
 	c.fillStyle.addColorStop(1,'rgba(0,0,0,0)');
 	c.fillStyle.addColorStop(0,'rgba(0,0,0,1)');
@@ -69,8 +69,8 @@ window.addEventListener("load",
 function () {
 	window.levels = 
 	[
-		new Level("l0",1738,431,20),
-		new Level("l1",1148,1152,20),
+		new Level("l0",1738,431,24),
+		new Level("l1",1148,1152,24),
 		new Level("l2",1015,1153,25),
 		new Level("l3",314,1707,20)
 	];
@@ -91,8 +91,8 @@ function () {
 window.addEventListener("contextmenu",function(e){e.preventDefault()});
 window.addEventListener("dblclick",function(e)
 {
-	let diffX = e.clientX - window.level.waldoX;
-	let diffY = e.clientY - window.level.waldoY;
+	var diffX = e.clientX - window.level.waldoX;
+	var diffY = e.clientY - window.level.waldoY;
 	if(Math.sqrt(diffX * diffX + diffY * diffY) <= window.level.waldoR)
 	{
 		window.drawable.fillStyle = "#FFEC8B";
