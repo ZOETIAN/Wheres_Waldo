@@ -1,9 +1,7 @@
 class Level
 {
 	constructor(url,waldoX,waldoY,waldoR){
-		this.url = url;
-		this.image = new Image();
-		this.image.src = url;
+		this.image = document.getElementById(url);
 		this.x = 0;
 		this.y = 0;
 		this.width = this.image.width;
@@ -71,10 +69,10 @@ window.addEventListener("load",
 function () {
 	window.levels = 
 	[
-		new Level("media/level0.jpg",1738,431,20),
-		new Level("media/level1.jpg",1148,1152,20),
-		new Level("media/level2.jpg",1015,1153,25),
-		new Level("media/level3.jpg",314,1707,20)
+		new Level("l0",1738,431,20),
+		new Level("l1",1148,1152,20),
+		new Level("l2",1015,1153,25),
+		new Level("l3",314,1707,20)
 	];
 	window.levelI = 0;
 	window.level = levels[levelI];
@@ -83,7 +81,7 @@ function () {
 	main.height = self.innerHeight;
 	main.width = self.innerWidth;
 	window.drawable = main.getContext("2d");
-	window.level.image.addEventListener("load",scale);
+	scale();
 	level.image.width = level.width;
 	level.image.height = level.height;
 	drawable.fillStyle = "#000";
@@ -101,7 +99,7 @@ window.addEventListener("dblclick",function(e)
 		window.drawable.fillRect(0,0,self.innerWidth,self.innerHeight);
 		alert("You find the Waldo! You can now continue the level " + ((window.levelI+=1)+1));
 		window.level = window.levels[levelI];
-		window.level.image.addEventListener("load",scale);
+		scale();
 		window.drawable.fillStyle = "#000";
 		window.drawable.fillRect(0,0,self.innerWidth,self.innerHeight);
 	}
