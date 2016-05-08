@@ -154,7 +154,7 @@ function () {
 	main.height = self.innerHeight;
 	main.width = self.innerWidth;
 	window.drawable = main.getContext("2d");
-	scale();
+	window.level.image.addEventListener("load",scale);
 	level.image.width = level.width;
 	level.image.height = level.height;
 	drawable.fillStyle = "#000";
