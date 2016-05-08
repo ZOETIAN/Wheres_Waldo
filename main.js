@@ -16,7 +16,7 @@ window.ondblclick = (function(e){
 	var level = 0;
 
 	var backgrounds = [
-		'url(http://jokideo.com/wp-content/uploads/2013/05/Lets-play-a-game-Wheres-wally-waldo.jpg)',
+		'url(http://jokideo.com/wp-content/uploads/2013/05/vars-play-a-game-Wheres-wally-waldo.jpg)',
 		'url(http://www.whereswaldo.com/m/images/maps_future.jpg)'
 		, 'url(http://i.imgur.com/auEx3XS.jpg)'
 		, 'url(http://img01.thedrum.com/s3fs-public/drum_basic_article/97639/main_images/WheresWallyAtWembley_6.jpg)'
@@ -114,7 +114,7 @@ function scale()
 
 	window.rgradient.width = window.level.aura * 2 + 2;
 	window.rgradient.height = window.rgradient.width;
-	let c = window.rgradient.getContext("2d");
+	var c = window.rgradient.getContext("2d");
 	c.fillStyle = c.createRadialGradient(window.level.aura,window.level.aura,window.level.aura,window.level.aura,window.level.aura,window.level.aura / 2);
 	c.fillStyle.addColorStop(1,'rgba(0,0,0,0)');
 	c.fillStyle.addColorStop(0,'rgba(0,0,0,1)');
@@ -164,8 +164,8 @@ function () {
 window.addEventListener("contextmenu",function(e){e.preventDefault()});
 window.addEventListener("dblclick",function(e)
 {
-	let diffX = e.clientX - window.level.waldoX;
-	let diffY = e.clientY - window.level.waldoY;
+	var diffX = e.clientX - window.level.waldoX;
+	var diffY = e.clientY - window.level.waldoY;
 	if(Math.sqrt(diffX * diffX + diffY * diffY) <= window.level.waldoR)
 	{
 		window.drawable.fillStyle = "#FFEC8B";
