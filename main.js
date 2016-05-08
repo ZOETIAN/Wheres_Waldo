@@ -1,23 +1,22 @@
-var $waldo = $('.main_div');
-var title = $(document).title;
+var $$waldo = document.getElementsByClassName('main_div')[0];
+var $waldo = $(".main_div");
 
-$(document).mousemove(function(e){
+window.onmousemove = (function(e){
   var x = e.pageX;
   var y = e.pageY;
   var path = 'circle(10% at ' + x + 'px ' + y + 'px)';
-  window.pathpath = path;
-  $waldo.css({
-    '-webkit-clip-path': path,
-    'clip-path': path
-  });
+
+  $waldo.style['-webkit-clip-path'] = path;
+  $waldo.style['clip-path'] = path;
 });
 
-$(document).dblclick(function(e){
+window.ondblclick = (function(e){
   var mouseX = e.pageX;
   var mouseY = e.pageY;
   var level = 0;
+
   var backgrounds = [
-    'http://jokideo.com/wp-content/uploads/2013/05/Lets-play-a-game-Wheres-wally-waldo.jpg',
+    'url(http://jokideo.com/wp-content/uploads/2013/05/Lets-play-a-game-Wheres-wally-waldo.jpg)',
     'url(http://www.whereswaldo.com/m/images/maps_future.jpg)'
     , 'url(http://i.imgur.com/auEx3XS.jpg)'
     , 'url(http://img01.thedrum.com/s3fs-public/drum_basic_article/97639/main_images/WheresWallyAtWembley_6.jpg)'
@@ -33,7 +32,8 @@ $(document).dblclick(function(e){
                        [1125,1035],[1136,1216],
                        [980, 1130], [1030, 1190],
                        [285, 1690], [320, 1760]
-      ];
+      ]
+      ;
 
       // calculate the ratios for four images
       for(var i = 0;i <oriImageWidths.length; i++) {
@@ -55,17 +55,17 @@ $(document).dblclick(function(e){
 
       // detect if the mouse is within the Waldo_range: if found, change the background color and next level
       if(mouseX >= newLeft && mouseX <= newRight && mouseY >= newBot && mouseY <= newTop) {
-        $('body').css("background", "#FFEC8B");
+        document.body.style["background"] = "#FFEC8B";
         level += 1;
         level = level % backgrounds.length;
-        $('html').css('background-image', backgrounds[level]);
-        $('.main_div').css('background-image', backgrounds[level]);
+        $$waldo.style['background-image'] = backgrounds[level];
         alert("You find the Waldo! You can now continue the level " + (level+1));
-        $('body').css("background", "#000");
+        document.body.style["background"] = "#000";
       }
       else{
-        $('body').css("background", "#B0E2FF");
+        document.body.style["background"] = "#B0E2FF";
         alert("Really?! That's your Waldo!")
-        $('body').css("background", "#000");
+        document.body.style["background"] = "#000";
       }
 });// double click funtion to find waldo
+
