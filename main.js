@@ -28,7 +28,7 @@ function scale()
 		window.level.x = 0;
 		window.level.y = (self.innerHeight - window.level.height) / 2;
 	}
-	window.level.aura = window.level.width * window.level.height / 10000;
+	window.level.aura = window.level.width * window.level.height / 20000;
 
 	window.level.waldoX = window.level.x + window.level.waldoXPx / window.level.image.width * window.level.width;
 	window.level.waldoY = window.level.y + window.level.waldoYPx / window.level.image.height * window.level.height;
@@ -46,6 +46,11 @@ function scale()
 	c.fillStyle.addColorStop(1,'rgba(0,0,0,0)');
 	c.fillStyle.addColorStop(0,'rgba(0,0,0,1)');
 	c.fillRect(0,0,window.rgradient.width,window.rgradient.height);
+
+	redraw({"clientX":window.mouseX,"clientY":window.mouseY});
+
+	window.screen_width = self.innerWidth;
+	window.screen_height = self.innerHeight;
 }
 function redraw(e)
 {
@@ -61,7 +66,7 @@ function redraw(e)
 	drawable.clip();
 	drawable.drawImage(window.level.image,window.level.x,window.level.y,window.level.width,window.level.height);
 	drawable.restore();
-	drawable.drawImage(window.rgradient,e.clientX - window.level.aura,e.clientY - window.level.aura);
+	drawable.drawImage(window.rgradient,e.clientX - window.level.aura - 1,e.clientY - window.level.aura);
 	window.mouseX = e.clientX;
 	window.mouseY = e.clientY;
 }
@@ -82,17 +87,18 @@ function () {
 	main.width = self.innerWidth;
 	window.drawable = main.getContext("2d");
 	scale();
-	level.image.width = level.width;
-	level.image.height = level.height;
 	drawable.fillStyle = "#000";
 	window.addEventListener("resize",scale);
 	window.addEventListener("mousemove",redraw);
+	window.screen_width = self.innerWidth;
+	window.screen_height = self.innerHeight;
 });
 window.addEventListener("contextmenu",function(e){e.preventDefault()});
 window.addEventListener("dblclick",function(e)
 {
 	var diffX = e.clientX - window.level.waldoX;
 	var diffY = e.clientY - window.level.waldoY;
+	console.log(e.clientX,e.clientY,level.waldoX,level.waldoY);
 	if(Math.sqrt(diffX * diffX + diffY * diffY) <= window.level.waldoR)
 	{
 		window.drawable.fillStyle = "#FFEC8B";
