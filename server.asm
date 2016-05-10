@@ -53,7 +53,8 @@ jmp event_loop
 Lsockaddr_in6:
 .short 10
 # port
-.short 80
+.byte 0
+.byte 80
 # flowinfo
 .long 0
 # address
