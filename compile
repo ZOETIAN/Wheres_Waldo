@@ -1,3 +1,5 @@
 #/bin/sh
 as server.asm -o server.o
 ld server.o -o server
+strip -s server
+sstrip server
