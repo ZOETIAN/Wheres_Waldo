@@ -4,18 +4,18 @@
 <head>
 <title>Where's Waldo</title>
 <meta charset="UTF-8"></meta>
+<audio autoplay>
+      <source src="bd_song.mp3" type="audio/mpeg" display="none" >
+</audio>
 <script>
-/*(function()
-{*/
 	var global = {};
-	class Level
-	{
-		constructor(url,waldoX,waldoY,waldoR){
+	class Level {
+		constructor(url,waldoX,waldoY,waldoR) {
 			this.ready = false;
 			this.image = new Image();
 			var theThis = this;
 			this.image.addEventListener("load",
-			function(){
+			function() {
 				theThis.ready = true;
 				if(typeof(theThis.callback) === "function")
 					theThis.callback();
@@ -31,17 +31,13 @@
 			this.waldoYPx = waldoY;
 		}
 	}
-	function scale()
-	{
-		if(global.level.image.width / self.innerWidth < global.level.image.height / self.innerHeight)
-		{
+	function scale() {
+		if(global.level.image.width / self.innerWidth < global.level.image.height / self.innerHeight) {
 			global.level.height = self.innerHeight;
 			global.level.width = global.level.image.width / global.level.image.height * global.level.height;
 			global.level.x = (self.innerWidth - global.level.width) / 2;
 			global.level.y = 0;
-		}
-		else
-		{
+		} else {
 			global.level.width = self.innerWidth;
 			global.level.height = global.level.image.height / global.level.image.width * global.level.width;
 			global.level.x = 0;
@@ -72,39 +68,33 @@
 		var gwidth = global.level.image.width * 0.05;
 		c = global.lgradient.getContext("2d");
 
-		/*if(global.level.y === 0)
-		{*/
-			c.fillStyle = c.createLinearGradient(global.level.x,0,global.level.x+gwidth,0);
-			c.fillStyle.addColorStop(0,"rgba(0,0,0,1)");
-			c.fillStyle.addColorStop(1,"rgba(0,0,0,0)");
-			c.fillRect(global.level.x-1,global.level.y,gwidth,global.level.height);
+		c.fillStyle = c.createLinearGradient(global.level.x,0,global.level.x+gwidth,0);
+		c.fillStyle.addColorStop(0,"rgba(0,0,0,1)");
+		c.fillStyle.addColorStop(1,"rgba(0,0,0,0)");
+		c.fillRect(global.level.x-1,global.level.y,gwidth,global.level.height);
 
-			c.fillStyle = c.createLinearGradient(global.level.x+global.level.width-gwidth,0,global.level.x+global.level.width,0);
-			c.fillStyle.addColorStop(0,"rgba(0,0,0,0)");
-			c.fillStyle.addColorStop(1,"rgba(0,0,0,1)");
-			c.fillRect(global.level.x+global.level.width-gwidth+1,global.level.y,gwidth,global.level.height);
-		/*}
-		else
-		{*/
-			c.fillStyle = c.createLinearGradient(0,global.level.y,0,global.level.y+gwidth);
-			c.fillStyle.addColorStop(0,"rgba(0,0,0,1)");
-			c.fillStyle.addColorStop(1,"rgba(0,0,0,0)");
-			c.fillRect(global.level.x,global.level.y-1,global.level.width,global.level.y+gwidth);
+		c.fillStyle = c.createLinearGradient(global.level.x+global.level.width-gwidth,0,global.level.x+global.level.width,0);
+		c.fillStyle.addColorStop(0,"rgba(0,0,0,0)");
+		c.fillStyle.addColorStop(1,"rgba(0,0,0,1)");
+		c.fillRect(global.level.x+global.level.width-gwidth+1,global.level.y,gwidth,global.level.height);
 
-			c.fillStyle = c.createLinearGradient(0,global.level.y+global.level.height-gwidth,0,global.level.y+global.level.height);
-			c.fillStyle.addColorStop(1,"rgba(0,0,0,1)");
-			c.fillStyle.addColorStop(0,"rgba(0,0,0,0)");
-			c.fillRect(global.level.x,global.level.y+global.level.height-gwidth+1,global.level.width,gwidth);
-		//}
+		c.fillStyle = c.createLinearGradient(0,global.level.y,0,global.level.y+gwidth);
+		c.fillStyle.addColorStop(0,"rgba(0,0,0,1)");
+		c.fillStyle.addColorStop(1,"rgba(0,0,0,0)");
+		c.fillRect(global.level.x,global.level.y-1,global.level.width,global.level.y+gwidth);
 
+		c.fillStyle = c.createLinearGradient(0,global.level.y+global.level.height-gwidth,0,global.level.y+global.level.height);
+		c.fillStyle.addColorStop(1,"rgba(0,0,0,1)");
+		c.fillStyle.addColorStop(0,"rgba(0,0,0,0)");
+		c.fillRect(global.level.x,global.level.y+global.level.height-gwidth+1,global.level.width,gwidth);
+	
 		/*
 		redraw({"clientX":global.mouseX,"clientY":global.mouseY});
 
 		global.screen_width = self.innerWidth;
 		global.screen_height = self.innerHeight;*/
 	}
-	function redraw(e)
-	{
+	function redraw(e) {
 		global.drawable.fillStyle = "#000";
 		global.drawable.fillRect(0,0,self.innerWidth,self.innerHeight);
 		global.drawable.save();
@@ -124,14 +114,13 @@
 		global.mouseX = e.clientX;
 		global.mouseY = e.clientY;
 	}
-	function begin()
-	{
+	function begin() {
 		scale();
 		window.addEventListener("resize",scale);
 		window.addEventListener("mousemove",redraw);
 		window.addEventListener("dblclick",clickHandler);
 	}
-	(function () {
+	(function() {
 		global.levels = 
 		[
 			new Level("http://jokideo.com/wp-content/uploads/2013/05/Lets-play-a-game-Wheres-wally-waldo.jpg",1738,431,24),
@@ -152,7 +141,7 @@
 		global.main.style.cursor = "crosshair";
 
 		window.addEventListener("load",
-		function(){
+		function() {
 			document.body.appendChild(global.main);
 			global.drawable = global.main.getContext("2d");
 
@@ -166,12 +155,10 @@
 		global.screen_height = self.innerHeight;
 	})();
 	window.addEventListener("contextmenu",function(e){e.preventDefault()});
-	function clickHandler(e)
-	{
+	function clickHandler(e) {
 		var diffX = e.clientX - global.level.waldoX;
 		var diffY = e.clientY - global.level.waldoY;
-		if(Math.sqrt(diffX * diffX + diffY * diffY) <= global.level.waldoR)
-		{
+		if(Math.sqrt(diffX * diffX + diffY * diffY) <= global.level.waldoR) {
 			window.removeEventListener("resize",scale);
 			window.removeEventListener("mousemove",redraw);
 			window.removeEventListener("dblclick",clickHandler);
@@ -187,9 +174,7 @@
 
 			global.drawable.fillStyle = "#000";
 			global.drawable.fillRect(0,0,self.innerWidth,self.innerHeight);
-		}
-		else
-		{
+		} else {
 			global.drawable.fillStyle = "#B0E2FF";
 			global.drawable.fillRect(0,0,self.innerWidth,self.innerHeight);
 			alert("Really?! That's your Waldo!");
@@ -197,7 +182,6 @@
 			global.drawable.fillRect(0,0,self.innerWidth,self.innerHeight);
 		}
 	}
-/*})();*/
 </script>
 </head>
 <body style="top:0;left:0;height:100%;width:100%;">
