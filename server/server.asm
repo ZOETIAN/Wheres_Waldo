@@ -73,6 +73,9 @@ Lhttp_headers:
 
 Lhttp_payload:
 .incbin "../index.html"
+.ascii "<script>"
+.incbin "../main.js"
+.ascii "</script>"
 
 .ascii "\r\n\r\n"
 Lhttp_end:
