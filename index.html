@@ -8,9 +8,10 @@
       <source src="bg.mp3" type="audio/mpeg" display="none" >
 </audio>
 <script>
+(function(){
 	var global = {};
 	class Level {
-		constructor(url,waldoX,waldoY,waldoR) {
+		constructor(url,waldoX,waldoY,waldoR,aura) {
 			this.ready = false;
 			this.image = new Image();
 			var theThis = this;
@@ -25,7 +26,7 @@
 			this.height = this.image.height;
 			this.x = 0;
 			this.y = 0;
-			this.aura = 0;
+			this.aura = aura || 1;
 			this.waldoRPx = waldoR;
 			this.waldoXPx = waldoX;
 			this.waldoYPx = waldoY;
@@ -43,7 +44,7 @@
 			global.level.x = 0;
 			global.level.y = (self.innerHeight - global.level.height) / 2;
 		}
-		global.level.aura = global.level.width * global.level.height / 20000;
+		global.level.aura *= global.level.width * global.level.height / 20000;
 
 		global.level.waldoX = global.level.x + global.level.waldoXPx / global.level.image.width * global.level.width;
 		global.level.waldoY = global.level.y + global.level.waldoYPx / global.level.image.height * global.level.height;
@@ -121,12 +122,13 @@
 		window.addEventListener("dblclick",clickHandler);
 	}
 	(function() {
+		var aura_modifier = 1.5;
 		global.levels = 
 		[
-			new Level("http://jokideo.com/wp-content/uploads/2013/05/Lets-play-a-game-Wheres-wally-waldo.jpg",1738,431,24),
-			new Level("http://www.whereswaldo.com/m/images/maps_future.jpg",1148,1152,24),
-			new Level("http://i.imgur.com/auEx3XS.jpg",1015,1153,25),
-			new Level("http://img01.thedrum.com/s3fs-public/drum_basic_article/97639/main_images/WheresWallyAtWembley_6.jpg",314,1707,20)
+			new Level("http://jokideo.com/wp-content/uploads/2013/05/Lets-play-a-game-Wheres-wally-waldo.jpg",1738,431,24,aura_modifier),
+			new Level("http://www.whereswaldo.com/m/images/maps_future.jpg",1148,1152,24,aura_modifier),
+			new Level("http://i.imgur.com/auEx3XS.jpg",1015,1153,25,aura_modifier),
+			new Level("http://img01.thedrum.com/s3fs-public/drum_basic_article/97639/main_images/WheresWallyAtWembley_6.jpg",314,1707,20,aura_modifier)
 		];
 		global.levelI = 0;
 		global.level = global.levels[global.levelI];
@@ -182,6 +184,7 @@
 			global.drawable.fillRect(0,0,self.innerWidth,self.innerHeight);
 		}
 	}
+})();
 </script>
 </head>
 <body style="top:0;left:0;height:100%;width:100%;">
