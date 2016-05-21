@@ -1,11 +1,8 @@
 #TODO by Zoe
 
-## 1) PS: add gradient effect for images
+## 1) add instructions walk through
 
-## 2) add instructions and loading page
+## 2) add controller - counter and timer
 
-## 3) add controller - counter and timer
+## 3) add the congrats animations
 
-## 4) add the congrats animations
-
-## 5) add the sound effects
