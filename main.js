@@ -23,6 +23,7 @@
 			this.waldoYPx = waldoY;
 		}
 	}
+
 	function scale() {
 		if(global.level.image.width / self.innerWidth < global.level.image.height / self.innerHeight) {
 			global.level.height = self.innerHeight;
@@ -79,13 +80,8 @@
 		c.fillStyle.addColorStop(1,"rgba(0,0,0,1)");
 		c.fillStyle.addColorStop(0,"rgba(0,0,0,0)");
 		c.fillRect(global.level.x,global.level.y+global.level.height-gwidth+1,global.level.width,gwidth);
-	
-		/*
-		redraw({"clientX":global.mouseX,"clientY":global.mouseY});
-
-		global.screen_width = self.innerWidth;
-		global.screen_height = self.innerHeight;*/
 	}
+
 	function redraw(e) {
 		global.drawable.fillStyle = "#000";
 		global.drawable.fillRect(0,0,self.innerWidth,self.innerHeight);
@@ -106,6 +102,7 @@
 		global.mouseX = e.clientX;
 		global.mouseY = e.clientY;
 	}
+
 	function begin() {
 		scale();
 		window.addEventListener("resize",scale);
@@ -114,12 +111,12 @@
 	}
 	(function() {
 		var aura_modifier = 2;
-		global.levels = 
+		global.levels =
 		[
-			new Level("http://jokideo.com/wp-content/uploads/2013/05/Lets-play-a-game-Wheres-wally-waldo.jpg",1738,431,28,aura_modifier),
-			new Level("http://www.whereswaldo.com/m/images/maps_future.jpg",1148,1152,28,aura_modifier),
-			new Level("http://i.imgur.com/auEx3XS.jpg",1015,1153,29,aura_modifier),
-			new Level("http://img01.thedrum.com/s3fs-public/drum_basic_article/97639/main_images/WheresWallyAtWembley_6.jpg",314,1707,25,aura_modifier)
+			new Level("https://www.dropbox.com/s/2fo8vgk946g74az/level0.jpg?dl=0",1738,431,28,aura_modifier),
+			new Level("https://www.dropbox.com/s/kob1xwk7mi6lgxg/level1.jpg?dl=0",1148,1152,28,aura_modifier),
+			new Level("https://www.dropbox.com/s/evzsih06h6ywk1o/level2.jpg?dl=0",1015,1153,29,aura_modifier),
+			new Level("https://www.dropbox.com/s/l9cs3u4jc7v3utg/level3.jpg?dl=0",314,1707,25,aura_modifier)
 		];
 		global.levelI = 0;
 		global.level = global.levels[global.levelI];
@@ -148,6 +145,7 @@
 		global.screen_height = self.innerHeight;
 	})();
 	window.addEventListener("contextmenu",function(e){e.preventDefault()});
+
 	function clickHandler(e) {
 		var diffX = e.clientX - global.level.waldoX;
 		var diffY = e.clientY - global.level.waldoY;
