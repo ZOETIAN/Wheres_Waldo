@@ -1,120 +1,176 @@
-class Level
-{
-	constructor(url,waldoX,waldoY,waldoR){
-		this.image = document.getElementById(url);
-		this.x = 0;
-		this.y = 0;
-		this.width = this.image.width;
-		this.height = this.image.height;
-		this.aura = 0;
-		this.waldoRPx = waldoR;
-		this.waldoXPx = waldoX;
-		this.waldoYPx = waldoY;
+"use strict";
+(function(){
+	var global = {};
+	class Level {
+		constructor(url,waldoX,waldoY,waldoR,aura) {
+			this.ready = false;
+			this.image = new Image();
+			var theThis = this;
+			this.image.addEventListener("load",
+			function() {
+				theThis.ready = true;
+				if(typeof(theThis.callback) === "function")
+					theThis.callback();
+			});
+			this.image.src = url;
+			this.width = this.image.width;
+			this.height = this.image.height;
+			this.x = 0;
+			this.y = 0;
+			this.aura = aura || 1;
+			this.waldoRPx = waldoR;
+			this.waldoXPx = waldoX;
+			this.waldoYPx = waldoY;
+		}
 	}
-}
-function scale()
-{
-	if(window.level.image.width / self.innerWidth < window.level.image.height / self.innerHeight)
-	{
-		window.level.height = self.innerHeight;
-		window.level.width = window.level.image.width / window.level.image.height * window.level.height;
-		window.level.x = (self.innerWidth - window.level.width) / 2;
-		window.level.y = 0;
+
+	function scale() {
+		if(global.level.image.width / self.innerWidth < global.level.image.height / self.innerHeight) {
+			global.level.height = self.innerHeight;
+			global.level.width = global.level.image.width / global.level.image.height * global.level.height;
+			global.level.x = (self.innerWidth - global.level.width) / 2;
+			global.level.y = 0;
+		} else {
+			global.level.width = self.innerWidth;
+			global.level.height = global.level.image.height / global.level.image.width * global.level.width;
+			global.level.x = 0;
+			global.level.y = (self.innerHeight - global.level.height) / 2;
+		}
+		global.level.aura *= global.level.width * global.level.height / 20000;
+
+		global.level.waldoX = global.level.x + global.level.waldoXPx / global.level.image.width * global.level.width;
+		global.level.waldoY = global.level.y + global.level.waldoYPx / global.level.image.height * global.level.height;
+		global.level.waldoR = global.level.waldoRPx / global.level.image.width * self.innerWidth;
+
+		global.main.width = self.innerWidth;
+		global.main.height = self.innerHeight;
+		global.drawable.fillStyle = "#000";
+		global.drawable.fillRect(0,0,self.innerWidth,self.innerHeight);
+
+		global.rgradient.width = global.level.aura * 2 + 3;
+		global.rgradient.height = global.rgradient.width;
+		var c = global.rgradient.getContext("2d");
+		c.fillStyle = c.createRadialGradient(global.level.aura,global.level.aura,global.level.aura,global.level.aura,global.level.aura,global.level.aura / 2);
+		c.fillStyle.addColorStop(1,'rgba(0,0,0,0)');
+		c.fillStyle.addColorStop(0,'rgba(0,0,0,1)');
+		c.fillRect(0,0,global.rgradient.width,global.rgradient.height);
+
+		global.lgradient.width = self.innerWidth;
+		global.lgradient.height = self.innerHeight;
+
+		var gwidth = global.level.image.width * 0.05;
+		c = global.lgradient.getContext("2d");
+
+		c.fillStyle = c.createLinearGradient(global.level.x,0,global.level.x+gwidth,0);
+		c.fillStyle.addColorStop(0,"rgba(0,0,0,1)");
+		c.fillStyle.addColorStop(1,"rgba(0,0,0,0)");
+		c.fillRect(global.level.x-1,global.level.y,gwidth,global.level.height);
+
+		c.fillStyle = c.createLinearGradient(global.level.x+global.level.width-gwidth,0,global.level.x+global.level.width,0);
+		c.fillStyle.addColorStop(0,"rgba(0,0,0,0)");
+		c.fillStyle.addColorStop(1,"rgba(0,0,0,1)");
+		c.fillRect(global.level.x+global.level.width-gwidth+1,global.level.y,gwidth,global.level.height);
+
+		c.fillStyle = c.createLinearGradient(0,global.level.y,0,global.level.y+gwidth);
+		c.fillStyle.addColorStop(0,"rgba(0,0,0,1)");
+		c.fillStyle.addColorStop(1,"rgba(0,0,0,0)");
+		c.fillRect(global.level.x,global.level.y-1,global.level.width,global.level.y+gwidth);
+
+		c.fillStyle = c.createLinearGradient(0,global.level.y+global.level.height-gwidth,0,global.level.y+global.level.height);
+		c.fillStyle.addColorStop(1,"rgba(0,0,0,1)");
+		c.fillStyle.addColorStop(0,"rgba(0,0,0,0)");
+		c.fillRect(global.level.x,global.level.y+global.level.height-gwidth+1,global.level.width,gwidth);
 	}
-	else
-	{
-		window.level.width = self.innerWidth;
-		window.level.height = window.level.image.height / window.level.image.width * window.level.width;
-		window.level.x = 0;
-		window.level.y = (self.innerHeight - window.level.height) / 2;
+
+	function redraw(e) {
+		global.drawable.fillStyle = "#000";
+		global.drawable.fillRect(0,0,self.innerWidth,self.innerHeight);
+		global.drawable.save();
+		global.drawable.beginPath();
+		global.drawable.moveTo(e.clientX-global.level.aura,e.clientY);
+		global.drawable.lineWidth = 1;
+		global.drawable.arcTo(e.clientX,e.clientY + Math.PI * 21 * global.level.aura,e.clientX+global.level.aura,e.clientY,global.level.aura);
+		global.drawable.arcTo(e.clientX,e.clientY - Math.PI * 21 * global.level.aura,e.clientX-global.level.aura,e.clientY,global.level.aura);
+		global.drawable.closePath();
+		global.drawable.clip();
+		global.drawable.drawImage(global.level.image,global.level.x,global.level.y,global.level.width,global.level.height);
+		global.drawable.restore();
+		global.drawable.drawImage(global.rgradient,e.clientX - global.level.aura - 1,e.clientY - global.level.aura);
+
+		global.drawable.drawImage(global.lgradient,0,0,self.innerWidth,self.innerHeight);
+
+		global.mouseX = e.clientX;
+		global.mouseY = e.clientY;
 	}
-	window.level.aura = window.level.width * window.level.height / 20000;
 
-	window.level.waldoX = window.level.x + window.level.waldoXPx / window.level.image.width * window.level.width;
-	window.level.waldoY = window.level.y + window.level.waldoYPx / window.level.image.height * window.level.height;
-	window.level.waldoR = window.level.waldoRPx / window.level.image.width * self.innerWidth;
-
-	window.main.width = self.innerWidth;
-	window.main.height = self.innerHeight;
-	window.drawable.fillStyle = "#000";
-	window.drawable.fillRect(0,0,self.innerWidth,self.innerHeight);
-
-	window.rgradient.width = window.level.aura * 2 + 2;
-	window.rgradient.height = window.rgradient.width;
-	var c = window.rgradient.getContext("2d");
-	c.fillStyle = c.createRadialGradient(window.level.aura,window.level.aura,window.level.aura,window.level.aura,window.level.aura,window.level.aura / 2);
-	c.fillStyle.addColorStop(1,'rgba(0,0,0,0)');
-	c.fillStyle.addColorStop(0,'rgba(0,0,0,1)');
-	c.fillRect(0,0,window.rgradient.width,window.rgradient.height);
-
-	redraw({"clientX":window.mouseX,"clientY":window.mouseY});
-
-	window.screen_width = self.innerWidth;
-	window.screen_height = self.innerHeight;
-}
-function redraw(e)
-{
-	drawable.fillStyle = "#000";
-	drawable.fillRect(0,0,self.innerWidth,self.innerHeight);
-	drawable.save();
-	drawable.beginPath();
-	drawable.moveTo(e.clientX-window.level.aura,e.clientY);
-	drawable.lineWidth = 1;
-	drawable.arcTo(e.clientX,e.clientY + Math.PI * 21 * window.level.aura,e.clientX+window.level.aura,e.clientY,window.level.aura);
-	drawable.arcTo(e.clientX,e.clientY - Math.PI * 21 * window.level.aura,e.clientX-window.level.aura,e.clientY,window.level.aura);
-	drawable.closePath();
-	drawable.clip();
-	drawable.drawImage(window.level.image,window.level.x,window.level.y,window.level.width,window.level.height);
-	drawable.restore();
-	drawable.drawImage(window.rgradient,e.clientX - window.level.aura - 1,e.clientY - window.level.aura);
-	window.mouseX = e.clientX;
-	window.mouseY = e.clientY;
-}
-window.addEventListener("load",
-function () {
-	window.levels = 
-	[
-		new Level("l0",1738,431,24),
-		new Level("l1",1148,1152,24),
-		new Level("l2",1015,1153,25),
-		new Level("l3",314,1707,20)
-	];
-	window.levelI = 0;
-	window.level = levels[levelI];
-	window.rgradient = document.createElement("canvas");
-	window.main = document.getElementById("main");
-	main.height = self.innerHeight;
-	main.width = self.innerWidth;
-	window.drawable = main.getContext("2d");
-	scale();
-	drawable.fillStyle = "#000";
-	window.addEventListener("resize",scale);
-	window.addEventListener("mousemove",redraw);
-	window.screen_width = self.innerWidth;
-	window.screen_height = self.innerHeight;
-});
-window.addEventListener("contextmenu",function(e){e.preventDefault()});
-window.addEventListener("dblclick",function(e)
-{
-	var diffX = e.clientX - window.level.waldoX;
-	var diffY = e.clientY - window.level.waldoY;
-	console.log(e.clientX,e.clientY,level.waldoX,level.waldoY);
-	if(Math.sqrt(diffX * diffX + diffY * diffY) <= window.level.waldoR)
-	{
-		window.drawable.fillStyle = "#FFEC8B";
-		window.drawable.fillRect(0,0,self.innerWidth,self.innerHeight);
-		alert("You find the Waldo! You can now continue the level " + ((window.levelI+=1)+1));
-		window.level = window.levels[levelI];
+	function begin() {
 		scale();
-		window.drawable.fillStyle = "#000";
-		window.drawable.fillRect(0,0,self.innerWidth,self.innerHeight);
+		window.addEventListener("resize",scale);
+		window.addEventListener("mousemove",redraw);
+		window.addEventListener("dblclick",clickHandler);
 	}
-	else
-	{
-		window.drawable.fillStyle = "#B0E2FF";
-		window.drawable.fillRect(0,0,self.innerWidth,self.innerHeight);
-		alert("Really?! That's your Waldo!");
-		window.drawable.fillStyle = "#000";
-		window.drawable.fillRect(0,0,self.innerWidth,self.innerHeight);
+	(function() {
+		var aura_modifier = 2;
+		global.levels =
+		[
+			new Level("https://raw.githubusercontent.com/zoetian/wheres_waldo/gh-pages/media/level0.jpg",1738,431,28,aura_modifier),
+			new Level("https://raw.githubusercontent.com/zoetian/wheres_waldo/gh-pages/media/level1.jpg",1148,1152,28,aura_modifier),
+			new Level("https://raw.githubusercontent.com/zoetian/wheres_waldo/gh-pages/media/level2.jpg",1015,1153,29,aura_modifier),
+			new Level("https://raw.githubusercontent.com/zoetian/wheres_waldo/gh-pages/media/level3.jpg",314,1707,25,aura_modifier)
+		];
+		global.levelI = 0;
+		global.level = global.levels[global.levelI];
+		global.rgradient = document.createElement("canvas");
+		global.lgradient = document.createElement("canvas");
+		global.main = document.createElement("canvas");
+		global.main.height = self.innerHeight;
+		global.main.width = self.innerWidth;
+		global.main.style.top = 0;
+		global.main.style.left = 0;
+		global.main.style.position = "fixed";
+		global.main.style.cursor = "crosshair";
+
+		window.addEventListener("load",
+		function() {
+			document.body.appendChild(global.main);
+			global.drawable = global.main.getContext("2d");
+
+			global.level.callback = begin;
+			if(global.level.ready)
+				global.level.callback();
+		}
+		);
+
+		global.screen_width = self.innerWidth;
+		global.screen_height = self.innerHeight;
+	})();
+	window.addEventListener("contextmenu",function(e){e.preventDefault()});
+
+	function clickHandler(e) {
+		var diffX = e.clientX - global.level.waldoX;
+		var diffY = e.clientY - global.level.waldoY;
+		if(Math.sqrt(diffX * diffX + diffY * diffY) <= global.level.waldoR) {
+			window.removeEventListener("resize",scale);
+			window.removeEventListener("mousemove",redraw);
+			window.removeEventListener("dblclick",clickHandler);
+
+			global.drawable.fillStyle = "#FFEC8B";
+			global.drawable.fillRect(0,0,self.innerWidth,self.innerHeight);
+			alert("You find the Waldo! You can now continue the level " + ((global.levelI+=1)+1));
+
+			global.level = global.levels[global.levelI];
+			global.level.callback = begin;
+			if(global.level.ready)
+				global.level.callback();
+
+			global.drawable.fillStyle = "#000";
+			global.drawable.fillRect(0,0,self.innerWidth,self.innerHeight);
+		} else {
+			global.drawable.fillStyle = "#B0E2FF";
+			global.drawable.fillRect(0,0,self.innerWidth,self.innerHeight);
+			alert("Really?! That's your Waldo!");
+			global.drawable.fillStyle = "#000";
+			global.drawable.fillRect(0,0,self.innerWidth,self.innerHeight);
+		}
 	}
-});
+})();

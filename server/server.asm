@@ -66,13 +66,16 @@ Lsockaddr_in6:
 Lhttp_headers:
 .ascii "HTTP/1.1 200 OK\r\n"
 .ascii "Content-Type: text/html\r\n"
-.ascii "Content-Length: 5598\r\n"
+.ascii "Content-Length: 8192\r\n"
 .ascii "Connection: close\r\n"
 
 .ascii "\r\n"
 
 Lhttp_payload:
-.incbin "index.html"
+.incbin "../index.html"
+.ascii "<script>"
+.incbin "../main.js"
+.ascii "</script>"
 
 .ascii "\r\n\r\n"
 Lhttp_end:
